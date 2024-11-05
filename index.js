@@ -6,7 +6,6 @@ const path = require('path');
 const fs = require('fs');
 
 // Set the environment variable for authentication
-process.env.GOOGLE_APPLICATION_CREDENTIALS = 'D:\\Bangkit\\Capstone\\percobaan\\ML\\byetrashfe7bd0081778.json';
 
 // Creates a client
 const client = new vision.ImageAnnotatorClient();
