@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Homepage</title>
+    <style>
+        body {
+            padding: 30px;
+            background: linear-gradient(to right, #e2e2e2, #c9d6ff);
+        }
+        h1 {
+            text-align: center;
+        }
+        button {
+            color: blueviolet;
+            background-color: #c9d6ff;
+            padding: 5px;
+            border-radius: 5px;
+            font-size: 1rem;
+            font-weight: bold;
+            border: none;
+        }
+        button:hover {
+            text-decoration: underline;
+            color: blue;
+        }
+        button, div {
+            margin-left: 15%;
+            font-size: 20px;
+            padding: 10px;
+        }
+        div {
+            font-weight: 400;
+            color: rgb(12, 11, 11);
+        }
+        span {
+            font-weight: 600;
+            font-size: 22px;
+            color: black;
+        }
+    </style>
+    <script type="module" src="./js/homepage.js"></script>
+</head>
+<body>
+    <h1>Welcome to the Homepage</h1>
+    <div>First Name: <span id="loggedUserFName"></span></div>
+    <div>Last Name: <span id="loggedUserLName"></span></div>
+    <div>Email: <span id="loggedUserEmail"></span></div>
+    <button id="logout">Logout</button>
+
+    <h1>Waste Classification</h1>
+    <form action="/upload" method="post" enctype="multipart/form-data">
+        <input type="file" name="image" accept="image/*" required />
+        <button type="submit">Start Prediction</button>
+    </form>
+    <h2>Or capture from camera:</h2>
+    <video id="video" width="640" height="480" autoplay></video>
+    <button id="snap">Capture</button>
+    <canvas id="canvas" width="640" height="480" style="display:none;"></canvas>
+    <form id="cameraForm" action="/upload" method="post" enctype="multipart/form-data" style="display:none;">
+        <input type="hidden" name="image" id="cameraImage" />
+        <button type="submit">Start Prediction</button>
+    </form>
+    <script>
+        const video = document.getElementById('video');
+        const canvas = document.getElementById('canvas');
+        const snap = document.getElementById('snap');
+        const cameraForm = document.getElementById('cameraForm');
+        const cameraImage = document.getElementById('cameraImage');
+
+        // Get access to the camera
+        if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
+            navigator.mediaDevices.getUserMedia({ video: true }).then(function(stream) {
+                video.srcObject = stream;
+                video.play();
+            });
+        }
+
+        // Capture the image from the video stream
+        snap.addEventListener('click', function() {
+            const context = canvas.getContext('2d');
+            context.drawImage(video, 0, 0, 640, 480);
+            const dataURL = canvas.toDataURL('image/png');
+            cameraImage.value = dataURL;
+            cameraForm.style.display = 'block';
+        });
+    </script>
+</body>
+</html>
