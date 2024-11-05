@@ -81,7 +81,8 @@
         </div>
       </div>
       <script src="js/script.js"></script>
-      <script>
+      <script type="module">
+          import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-auth.js";
           document.addEventListener('DOMContentLoaded', function() {
               const auth = getAuth();
               onAuthStateChanged(auth, (user) => {

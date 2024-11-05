@@ -17,10 +17,10 @@ const upload = multer({ dest: 'uploads/' });
 // Serve static files
 app.use(express.static(path.join(__dirname, 'public')));
 
-// Serve the HTML form for uploading images or capturing from the camera
-app.get('/', (req, res) => {
-    res.sendFile(path.join(__dirname, 'homepage.html'));
-});
+// Remove this route
+// app.get('/', (req, res) => {
+//     res.sendFile(path.join(__dirname, 'homepage.html'));
+// });
 
 app.post('/upload', upload.single('image'), async (req, res) => {
     let filePath;
